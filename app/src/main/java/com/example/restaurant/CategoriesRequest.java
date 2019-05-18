@@ -34,13 +34,14 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
         this.activity = activity;
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
-                "https://resto.mprog.nl/", null, this, this);
+                "https://resto.mprog.nl/categories", null, this,
+                this);
         queue.add(jsonObjectRequest);
     }
 
     @Override
     public void onResponse(JSONObject response) {
-
+        Log.d("tot hier", "1");
         JSONArray categories = null;
         try {
             categories = response.getJSONArray("categories");
