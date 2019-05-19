@@ -41,7 +41,6 @@ public class CategoriesRequest implements Response.Listener<JSONObject>, Respons
 
     @Override
     public void onResponse(JSONObject response) {
-        Log.d("tot hier", "1");
         JSONArray categories = null;
         try {
             categories = response.getJSONArray("categories");
