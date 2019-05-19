@@ -34,17 +34,15 @@ public class MenuItemAdapter extends ArrayAdapter<MenuItem> {
                     false);
         }
 
-        ImageView menuItemImageView = convertView.findViewById(R.id.menuItemImageView);
+        ImageView menuImageView = convertView.findViewById(R.id.menuImageView);
         TextView titleView = convertView.findViewById(R.id.titleView);
-        TextView categoryView = convertView.findViewById(R.id.categoryView);
         TextView descriptionView = convertView.findViewById(R.id.descriptionView);
         TextView priceView = convertView.findViewById(R.id.priceView);
 
         MenuItem current = menuItems.get(position);
 
-        Picasso.with(context).load(current.getImageUrl()).into(menuItemImageView);
+        Picasso.with(context).load(current.getImageUrl()).into(menuImageView);
         titleView.setText(current.getName());
-        categoryView.setText(current.getCategory());
         descriptionView.setText(current.getDescription());
         priceView.setText("Price: €"+String.valueOf(current.getPrice())+",-");
 

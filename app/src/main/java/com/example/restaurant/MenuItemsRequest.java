@@ -64,6 +64,14 @@ public class MenuItemsRequest implements Response.Listener<JSONObject>, Response
                 String category = menuItemJSON.getString("category");
 
 
+                // capitalize category name again
+                StringBuilder sb = new StringBuilder();
+                sb.append(Character.toUpperCase(category.charAt(0)));
+                sb.append(category.substring(1).toLowerCase());
+                category = sb.toString();
+                Log.d("print", category);
+                Log.d("print", categoryClicked);
+
                 if (category.equals(categoryClicked)) {
                     MenuItem menuItem = new MenuItem(name, description, imageUrl, price, category);
                     menuItemsList.add(menuItem);
