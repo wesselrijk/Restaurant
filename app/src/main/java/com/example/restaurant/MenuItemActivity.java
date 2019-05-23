@@ -36,7 +36,5 @@ public class MenuItemActivity extends AppCompatActivity {
         category.setText(" - "+clickedItem.getCategory()+" -");
         description.setText(clickedItem.getDescription());
         price.setText("Price: €"+String.valueOf(clickedItem.getPrice())+",-");
-
-
     }
 }
