@@ -1,5 +1,12 @@
 package com.example.restaurant;
+/**
+ * The MenuItemsRequest class for the app.
+ * This is the class that handles a JsonObjectRequest coming from the MenuActivity. This request
+ * asks for a list of items belonging to a specific category and returns it to the MenuActivity if
+ * successful. If not successful, error messages will be returned to the MainActivity.
+ */
 
+// List of imports.
 import android.content.Context;
 import android.util.Log;
 
@@ -22,18 +29,23 @@ public class MenuItemsRequest implements Response.Listener<JSONObject>, Response
     private Context context;
     private Callback activity;
 
+    // Constructor sets variables.
     public MenuItemsRequest(Context context, String categoryClicked) {
         this.context = context;
         this.categoryClicked = categoryClicked;
     }
 
+    // Callback method for the MenuActivity.
     public interface Callback {
         void gotMenuItems(ArrayList<MenuItem> menuItems);
         void gotMenuItemsError(String message);
     }
 
+    // Method called to execute a GET request from the server, also sets activity.
     public void getMenuItems(Callback activity) {
         this.activity = activity;
+
+        // Create a request queue and sets a request for menu items to the queue.
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,
                 "https://resto.mprog.nl/menu", null, this,
@@ -41,17 +53,22 @@ public class MenuItemsRequest implements Response.Listener<JSONObject>, Response
         queue.add(jsonObjectRequest);
     }
 
+    // Method called when there is a successful response from the server.
     @Override
     public void onResponse(JSONObject response) {
+
+        // Creates an empty JSONArray and tries to set it to JSONArray from the response.
         JSONArray menuItems = null;
         try {
             menuItems = response.getJSONArray("items");
         } catch (JSONException e) {
+
+            // Returns error to the activity.
             e.printStackTrace();
-            Log.d("onResponse error message.",e.getMessage());
             activity.gotMenuItemsError(e.getMessage());
         }
-        Log.d("Add to list.", String.valueOf(menuItems.length()));
+
+        // Creates an empty ArrayList and tries to fill it with data from JSONArray categories.
         ArrayList<MenuItem> menuItemsList = new ArrayList<>();
         for (int i = 0; i < menuItems.length(); i++) {
             try {
@@ -64,31 +81,34 @@ public class MenuItemsRequest implements Response.Listener<JSONObject>, Response
                 String category = menuItemJSON.getString("category");
 
 
-                // capitalize category name again
+                // Capitalize category name again.
                 StringBuilder sb = new StringBuilder();
                 sb.append(Character.toUpperCase(category.charAt(0)));
                 sb.append(category.substring(1).toLowerCase());
                 category = sb.toString();
-                Log.d("print", category);
-                Log.d("print", categoryClicked);
 
+                // Add objects to menuItemsList if they are of the category that the user requested.
                 if (category.equals(categoryClicked)) {
                     MenuItem menuItem = new MenuItem(name, description, imageUrl, price, category);
                     menuItemsList.add(menuItem);
                 }
             } catch (JSONException e) {
+
+                // Returns error to the activity.
                 e.printStackTrace();
-                Log.d("onResponse error message.",e.getMessage());
                 activity.gotMenuItemsError(e.getMessage());
             }
         }
-        Log.d("menuItems", String.valueOf(menuItemsList.size()));
+
+        // Return menuItemsList to the activity.
         activity.gotMenuItems(menuItemsList);
     }
 
+    // Method called when there is an unsuccessful response from the server.
     @Override
     public void onErrorResponse(VolleyError error) {
+
+        // Returns error to the activity.
         activity.gotMenuItemsError(error.toString());
-        Log.d("Volley error message.",error.toString());
     }
 }

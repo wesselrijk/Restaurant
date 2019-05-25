@@ -1,5 +1,11 @@
 package com.example.restaurant;
+/**
+ * The EntryAdapter adapter for the app.
+ * The adapter is set to a ListView in the activity_main. Then the adapter will fill in the items
+ * in the list of the ListView with information it is being fed from the database.
+ */
 
+// List of imports.
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,18 +23,19 @@ public class MenuItemAdapter extends ArrayAdapter<MenuItem> {
     private Context context;
     private ArrayList<MenuItem> menuItems;
 
-    // constructor
+    // Constructor calls super and sets variables.
     public MenuItemAdapter(Context context, int layout, ArrayList<MenuItem> objects) {
         super(context, layout, objects);
+
         this.context = context;
         this.menuItems = objects;
     }
 
-    // an override method used to fill in the items of the GridView of the activity_main layout
+    // The visual representation for the ListView in the activity_menu is set.
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        // if the convertView is empty, the convertView will be set to the grid_item layout
+        // If the convertView is empty, the convertView will be set to the menu_item_row layout.
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.menu_item_row, parent,
                     false);
@@ -41,11 +48,12 @@ public class MenuItemAdapter extends ArrayAdapter<MenuItem> {
 
         MenuItem current = menuItems.get(position);
 
+        // Use Picasso to set the menuImageView to the iamge's url.
         Picasso.with(context).load(current.getImageUrl()).into(menuImageView);
+
         titleView.setText(current.getName());
         descriptionView.setText(current.getDescription());
         priceView.setText("Price: €"+String.valueOf(current.getPrice())+",-");
-
 
         return convertView;
     }

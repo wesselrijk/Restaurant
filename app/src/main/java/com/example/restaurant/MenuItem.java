@@ -1,4 +1,9 @@
 package com.example.restaurant;
+/**
+ * The MenuItem class for the app.
+ * This is the class that holds the information for any menu 9item. This includes the name,
+ * the description, the price and category as well as the url referring to the image of the item.
+ */
 
 import java.io.Serializable;
 
@@ -10,6 +15,7 @@ public class MenuItem implements Serializable {
     private int price;
     private String category;
 
+    // The constructor calls super and sets the variables.
     public MenuItem(String name, String description, String imageUrl, int price, String category) {
         super();
         this.name = name;
@@ -19,25 +25,10 @@ public class MenuItem implements Serializable {
         this.category = category;
     }
 
-    // list of getters
+    // List of getters.
     public String getName() { return this.name; }
     public String getDescription() {return this.description; }
     public String getImageUrl() {return this.imageUrl; }
     public int getPrice() {return this.price; }
     public String getCategory() {return this.category; }
-
-    // list of setters
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setDescription(String description) { this.description = description; }
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-    public void setPrice(int price) {
-        this.price = price;
-    }
-    public void setCategory(String category) {
-        this.category = category;
-    }
 }
