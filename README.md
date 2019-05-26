@@ -1,5 +1,5 @@
 # Restaurant
-A short description of the app Journal.
+A short description of the app Restaurant.
 
 ## Getting Started
 ### Prerequisites
